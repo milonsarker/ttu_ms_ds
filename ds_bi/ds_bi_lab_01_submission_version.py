@@ -26,13 +26,7 @@ class Business_Intelligence:
 				 + soupObj.find('div', attrs = {'id' : 'Phoneinitial'}).find_all('tr')[2].find_all('td')[1].text
 			fin_dim = soupObj.find('div', attrs = {'id' : 'Phoneinitial'}).find_all('tr')[0].find_all('td')[0].text + \
 					soupObj.find('div', attrs = {'id' : 'Phoneinitial'}).find_all('tr')[0].find_all('td')[1].text
-
-			print(fin_net)
-			print(fin_storage)
-			print(color)
-			print(os)
-			print(fin_dim)
-
+			print(fin_net + '\n' + fin_storage + '\n' + color + '\n' + os + '\n' + fin_dim)
 		root_url = "http://drd.ba.ttu.edu/isqs6339/labs/lab1/"
 		root_url_data = requests.get(root_url)
 		print("Values for Task #1")
@@ -42,8 +36,7 @@ class Business_Intelligence:
 		print("Returned Header for Page:  " + str(root_url_data.headers))
 
 		soup_obj = BeautifulSoup(root_url_data.content, 'lxml')
-		print('')
-		print("***Task #2***\nThe following are values for the IPhone 11 Pro")
+		print("\n***Task #2***\nThe following are values for the IPhone 11 Pro")
 		get_ul = soup_obj.find('ul')
 		get_li_class = get_ul.find_all('li', attrs = {'class' : 'root'})
 
@@ -54,14 +47,12 @@ class Business_Intelligence:
 				print(a.find_all('li')[0].text)
 				iphone_url = root_url + a.find_all('li')[2].find('a')['href']
 				task_3(iphone_url)
-		print('')
-		print('***Task #4***')
+		print('\n***Task #4***')
 		for a in get_li_class:
-			print('')
 			print("***Phone #"+str(cnt)+ " ***")
 			print("Product Name: "+ a.find('span').text)
-			iphone_url = root_url + a.find_all('li')[2].find('a')['href']
-			part_of_task_4(iphone_url, a.find_all('li')[1].text, a.find_all('li')[0].text)
+			child_full_url = root_url + a.find_all('li')[2].find('a')['href']
+			part_of_task_4(child_full_url, a.find_all('li')[1].text, a.find_all('li')[0].text)
 			cnt += 1
 if __name__=="__main__":
 	bi_Obj = Business_Intelligence()
