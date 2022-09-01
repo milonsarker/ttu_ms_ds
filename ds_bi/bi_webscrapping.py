@@ -107,7 +107,7 @@ class Business_Intelligence:
 				if len(row.find_all('td')) > 0:
 					fields = row.find_all('td')
 					url_link = fields[0].find('a')
-					row_data['details_link'] = url_link['href']
+					row_data['details_link'] = root_url + url_link['href']
 					row_data['rank'] = fields[1].text
 					row_data['name'] = fields[2].text
 					row_data['avg_sleep'] = fields[3].text
@@ -115,14 +115,11 @@ class Business_Intelligence:
 					row_data['avg_steps'] = fields[5].text
 					row_data['metric'] = fields[6].text
 					data.append(row_data)
-
 		same_task_one_func(records)
-
 		flag_dict = {'1':True}
 		link_list = soupObj.find_all('a')
 		for link in link_list:
 			if 'index.php' in link['href'] and link.text not in flag_dict:
-				print(link['href'])
 				url = root_url + link['href']
 				url_data = requests.get(url)
 				soupObj = BeautifulSoup(url_data.content, 'lxml')
@@ -130,9 +127,8 @@ class Business_Intelligence:
 				records = tbl_data.find_all('tr')
 				same_task_one_func(records)
 				flag_dict[link.text] = True
-		print(flag_dict)
 		df = pd.DataFrame(data)
-		print(df)
+		df.to_csv('scoreboard_data_profile.csv', index = False, sep = '|')
 
 if __name__=="__main__":
 	bi_Obj = Business_Intelligence()
