@@ -16,9 +16,10 @@ Class Definition : Program has been written in OOP manner. here is the below cla
 '''
 class Business_Intelligence:
 	'''
-	Function Name 	: 
-	Parameters	: no parameters
-	Purpose		: It has been designed to scrap data from certain URL and subsequently from child pages as per instructions. 
+	Function Name 	: lab_3 
+	Parameters	: url : child page url where phone storage size and camera features data available
+	Purpose		: It has been designed to scrap data from child pages as per instructions.
+			  It main scraps phone storage, network capability and camera features data
 	'''	
 	def task_3(self, url):
 		print("\n***Task #3***")
@@ -30,6 +31,14 @@ class Business_Intelligence:
 		camera_feature = soupObj.find('div', attrs = {'id' : 'Phoneotherstuff'}).find('span', attrs = {'class' : 'item'}).find_all('li')
 		data = [i.text for i in camera_feature]
 		print("Front Camera Features: " + ",".join(data))
+	'''
+	Function Name 	: part_of_task_4 
+	Parameters	: url 	: child page url where phone storage size, network capabality, and phone dimension data available
+			  color : phone color data has been passed as param
+			  os 	: phone operating system data has been passed as param 
+	Purpose		: It has been designed to scrap data from child pages as per instructions.
+			  It main scraps phone storage size, network capabality, and phone dimension data and displays data as per format
+	'''	
 	def part_of_task_4(self, url, color, os):
 		iphone_data = requests.get(url)
 		soupObj = BeautifulSoup(iphone_data.content, 'lxml')
